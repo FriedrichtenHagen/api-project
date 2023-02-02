@@ -15,10 +15,21 @@ new Promise(function(resolve, reject) {
 })
 .finally(res => { console.log("finally") });
 
-
+throw Error ("bad parameters")
 var request1 = fetch('/users.json');
 var request2 = fetch('/articles.json');
 
 Promise.all([request1, request2]).then(function(results) {
 	// Both promises done!
 });
+
+
+// split-callback design as an example, similiar to Promise in ES6
+function success(data) {
+	console.log( data );
+}
+
+function failure(err) {
+	console.error( err );
+}
+ajax( "http://some.url.1", success, failure );
