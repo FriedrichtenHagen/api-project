@@ -58,12 +58,16 @@ function displayName(data){
 // display the pokemon sprites in the DOM
 function displaySprite(data){
 	let spriteArray = Object.keys(data.sprites)
-	
+
 	for(let key of spriteArray){
-		if(data.sprites[key]!==null&&typeof(data.sprites[key])!== "object"){
-			let newSpriteImage = document.createElement("img")
-			newSpriteImage.src = `${data.sprites[key]}`
-			sprite.append(newSpriteImage)
+		// only display front facing images
+		if(key.includes("front")){
+			if(data.sprites[key]!==null&&typeof(data.sprites[key])!== "object"){
+				let newSpriteImage = document.createElement("img")
+				newSpriteImage.src = `${data.sprites[key]}`
+				sprite.append(newSpriteImage)
+				
+			}
 		}
 	}
 }
