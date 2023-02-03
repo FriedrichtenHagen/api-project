@@ -3,7 +3,7 @@
 // https://developer.spotify.com/documentation/web-api/
 
 
-
+/*
 new Promise(function(resolve, reject) {
 	// A mock async action using setTimeout
 	setTimeout(function() { reject(10); }, 3000);
@@ -22,14 +22,23 @@ var request2 = fetch('/articles.json');
 Promise.all([request1, request2]).then(function(results) {
 	// Both promises done!
 });
+*/
 
+let test;
+const sprite = document.querySelector(".sprite")
 
-// split-callback design as an example, similiar to Promise in ES6
-function success(data) {
-	console.log( data );
-}
+// three states of promises: pending, resolved, rejected
 
-function failure(err) {
-	console.error( err );
-}
-ajax( "http://some.url.1", success, failure );
+fetch("https://pokeapi.co/api/v2/pokemon/ditto")
+	// fetch returns a promise
+	.then((res)=> {
+		console.log(res)
+		res.json().then((data)=>{
+			console.log(data)		
+			sprite.src= data.sprites.back_default
+		})
+	})
+	.catch((err)=>{
+		console.log(err)
+	})
+
