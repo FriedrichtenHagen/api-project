@@ -23,22 +23,34 @@ Promise.all([request1, request2]).then(function(results) {
 	// Both promises done!
 });
 */
-
-let test;
 const sprite = document.querySelector(".sprite")
-
 // three states of promises: pending, resolved, rejected
 
-fetch("https://pokeapi.co/api/v2/pokemon/ditto")
+// fetch data from api
+fetch("https://pokeapi.co/api/v2/pokemon/blastoise")
 	// fetch returns a promise
 	.then((res)=> {
 		console.log(res)
 		res.json().then((data)=>{
-			console.log(data)		
-			sprite.src= data.sprites.back_default
+			console.log(data.sprites)
+			displaySprites(data)		
 		})
 	})
 	.catch((err)=>{
 		console.log(err)
 	})
 
+// display the pokemon sprites in the DOM
+function displaySprites(data){
+	let spriteArray = Object.keys(data.sprites)
+	console.log(spriteArray)
+	
+	for(let key of spriteArray){
+		console.log(key + " -> " + data.sprites[key])
+		if(data.sprites[key]!==null&&typeof(data.sprites[key])!== "object"){
+			let newSpriteImage = document.createElement("img")
+			newSpriteImage.src = `${data.sprites[key]}`
+			sprite.append(newSpriteImage)
+		}
+	}
+}
