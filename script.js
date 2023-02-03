@@ -26,27 +26,40 @@ Promise.all([request1, request2]).then(function(results) {
 const sprite = document.querySelector(".sprite")
 // three states of promises: pending, resolved, rejected
 
-// fetch data from api
-fetch("https://pokeapi.co/api/v2/pokemon/blastoise")
+const searchButton = document.querySelector("#searchButton")
+searchButton.addEventListener("click", makeSearchrequest)
+
+function makeSearchrequest(){
+	// read query from input element
+	let query = document.querySelector("#pokeSearch").value.toLowerCase()
+	console.log("search query: " + query)
+	// fetch data from api
+	fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
 	// fetch returns a promise
-	.then((res)=> {
-		console.log(res)
-		res.json().then((data)=>{
-			console.log(data.sprites)
-			displaySprites(data)		
+	.then((response)=> {
+		console.log(response)
+		response.json().then((data)=>{
+			console.log(data)
+			displaySprite(data)
+			displayName(data)		
 		})
 	})
 	.catch((err)=>{
 		console.log(err)
 	})
+}
+
+function displayName(data){
+	const name = document.querySelector(".name")
+	name.textContent = data.name
+}
+
 
 // display the pokemon sprites in the DOM
-function displaySprites(data){
+function displaySprite(data){
 	let spriteArray = Object.keys(data.sprites)
-	console.log(spriteArray)
 	
 	for(let key of spriteArray){
-		console.log(key + " -> " + data.sprites[key])
 		if(data.sprites[key]!==null&&typeof(data.sprites[key])!== "object"){
 			let newSpriteImage = document.createElement("img")
 			newSpriteImage.src = `${data.sprites[key]}`
