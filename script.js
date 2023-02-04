@@ -2,52 +2,57 @@
 // https://pokeapi.co/
 // https://developer.spotify.com/documentation/web-api/
 
-
-/*
-new Promise(function(resolve, reject) {
-	// A mock async action using setTimeout
-	setTimeout(function() { reject(10); }, 3000);
-})
-.then(function(num) { console.log('second then: ', num); return num * 2; })
-.then(function(num) { console.log('last then: ', num);})
-.catch(function(num){
-    console.log("catch: ", num)
-})
-.finally(res => { console.log("finally") });
-
-throw Error ("bad parameters")
-var request1 = fetch('/users.json');
-var request2 = fetch('/articles.json');
-
-Promise.all([request1, request2]).then(function(results) {
-	// Both promises done!
-});
-*/
 const sprite = document.querySelector(".sprite")
 // three states of promises: pending, resolved, rejected
 
 const searchButton = document.querySelector("#searchButton")
 searchButton.addEventListener("click", makeSearchrequest)
 
-function makeSearchrequest(){
+// using promise syntax:
+// function makeSearchrequest(){
+// 	// read query from input element
+// 	let query = document.querySelector("#pokeSearch").value.toLowerCase()
+// 	console.log("search query: " + query)
+// 	// fetch data from api
+// 	fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
+// 	// fetch returns a promise
+// 	.then((response)=> {
+// 		console.log(response)
+// 		response.json().then((data)=>{
+// 			console.log(data)
+// 			displaySprite(data)
+// 			displayName(data)		
+// 		})
+// 	})
+// 	.catch((err)=>{
+// 		console.log(err)
+// 	})
+// }
+
+// using async and await syntax
+async function makeSearchrequest(){
 	// read query from input element
 	let query = document.querySelector("#pokeSearch").value.toLowerCase()
 	console.log("search query: " + query)
 	// fetch data from api
-	fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
+	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
 	// fetch returns a promise
-	.then((response)=> {
+	try{
 		console.log(response)
-		response.json().then((data)=>{
-			console.log(data)
-			displaySprite(data)
-			displayName(data)		
-		})
-	})
-	.catch((err)=>{
-		console.log(err)
-	})
+		let data = await response.json()
+		console.log(data)
+		displaySprite(data)
+		displayName(data)	
+	} catch (error){
+		console.log("MY ERROR: " +error)
+	}
 }
+
+
+
+
+
+
 
 function displayName(data){
 	const name = document.querySelector(".name")
@@ -72,7 +77,7 @@ function displaySprite(data){
 
 /*
 Pokemon quiz
-
+generate random (winning pokemon)
 fetch data.species.url for the description
 data.game_indices limit to old school pokemon
 
