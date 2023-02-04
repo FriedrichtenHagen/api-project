@@ -6,34 +6,19 @@ const sprite = document.querySelector(".sprite")
 // three states of promises: pending, resolved, rejected
 
 const searchButton = document.querySelector("#searchButton")
-searchButton.addEventListener("click", makeSearchrequest)
-
-// using promise syntax:
-// function makeSearchrequest(){
-// 	// read query from input element
-// 	let query = document.querySelector("#pokeSearch").value.toLowerCase()
-// 	console.log("search query: " + query)
-// 	// fetch data from api
-// 	fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
-// 	// fetch returns a promise
-// 	.then((response)=> {
-// 		console.log(response)
-// 		response.json().then((data)=>{
-// 			console.log(data)
-// 			displaySprite(data)
-// 			displayName(data)		
-// 		})
-// 	})
-// 	.catch((err)=>{
-// 		console.log(err)
-// 	})
-// }
-
-// using async and await syntax
-async function makeSearchrequest(){
+searchButton.addEventListener("click", () => {
 	// read query from input element
 	let query = document.querySelector("#pokeSearch").value.toLowerCase()
 	console.log("search query: " + query)
+
+	makeSearchrequest(query)
+	makeTypeRequest(query)
+})
+
+
+// using async and await syntax
+async function makeSearchrequest(query){
+	
 	// fetch data from api
 	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
 	// fetch returns a promise
@@ -42,14 +27,52 @@ async function makeSearchrequest(){
 		let data = await response.json()
 		console.log(data)
 		displaySprite(data)
-		displayName(data)	
+		displayName(data)
+		fetchDescriptions(data)	
 	} catch (error){
 		console.log("MY ERROR: " +error)
 	}
 }
 
+async function fetchDescriptions(data){
+	try{
+		const pokemonUrl = data.species.url
+		const response = await fetch(pokemonUrl)
+		let pokemonData = await response.json()
+		console.log(pokemonData)
+		console.log(pokemonData.genera[7].genus) // english poke type
+		
+		console.log(pokemonData.flavor_text_entries[0].flavor_text)
+	} catch(error){
+		console.log("Pokemon Retrieval error: " + error)
+	}	
+}
 
 
+
+
+async function makeTypeRequest(query){
+
+	const pokeTypeColors = {
+		"Psi Pokémon" : "purple",
+
+	}
+
+	// fetch data from api
+	const response = await fetch(`https://pokeapi.co/api/v2/type/${query}/`)
+	// fetch returns a promise
+	try{
+		console.log(response)
+		let data = await response.json()
+		console.log(data)
+		
+	} catch (error){
+		console.log("MY ERROR: " +error)
+	}
+
+
+
+}
 
 
 
