@@ -9,19 +9,16 @@ let correctAnswerId;
 let score;
 
 function startNewQuestion(){
+	// clear field of all previous sprites
+
 	// generate array of 9 random Pokemon ids
 	let randomPokemonArray = generateRandomPokemon()
-	// first pokemon in array is chosen as correct answer
-	correctAnswerId = randomPokemonArray[0]
-	console.log(correctAnswerId)
 
 	// fetch API for correctAnswerId and display description
 	getPokemon(correctAnswerId, true)
 	
-	// display all 9 sprites
+	// fetch and display all 9 sprites
 	getAllSprites(randomPokemonArray)
-
-
 
 }
 
@@ -40,7 +37,6 @@ async function getAllSprites(randomPokemonArray){
 }
 
 function generateRandomPokemon(){
-	// generate random answer Pokemon
 	let numberOfRandomPokemon = 9
 	let maximumId = 151 // limits the pokemon to first generation
 	/*
@@ -61,6 +57,12 @@ function generateRandomPokemon(){
 		let randomPokemonId = Math.floor(Math.random()*maximumId+1)
 		randomPokemonArray.push(randomPokemonId)
 	}
+	// decide which pokemon is the correct answer (1-numberOfRandomPokemon)
+	let randomNumber = Math.floor(Math.random()*numberOfRandomPokemon+1)
+
+	correctAnswerId = randomPokemonArray[randomNumber]
+	console.log(correctAnswerId)
+
 	console.log(randomPokemonArray)
 	return randomPokemonArray
 }
@@ -155,7 +157,6 @@ cleaning up description
 
 prevent duplicate random ids
 
-the first item should not always be the correct answer
 
 add score counter
 make different generations different levels
