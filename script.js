@@ -11,6 +11,9 @@ let score;
 function startNewQuestion(){
 	// clear field of all previous sprites
 
+	while (sprites.firstChild) {
+		sprites.removeChild(sprites.lastChild);
+	}
 	// generate array of 9 random Pokemon ids
 	let randomPokemonArray = generateRandomPokemon()
 
@@ -136,7 +139,10 @@ function evaluateClick(spriteImage, currentId){
 		// check if new level is reached
 
 		// refresh description and sprites
-		startNewQuestion()
+		setTimeout(() => {
+			startNewQuestion()
+		}, "2000")
+		
 		// update score in DOM
 
 	} else{
