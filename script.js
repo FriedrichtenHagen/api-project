@@ -7,19 +7,42 @@ const sprites = document.querySelector(".sprites")
 
 function startNewQuestion(){
 	// generate array of 9 random Pokemon ids
+	let randomPokemonArray = generateRandomPokemon()
+	// first pokemon in array is chosen as correct answer
+	let correctAnswerId = randomPokemonArray[0]
+	console.log(correctAnswerId)
+
+	// fetch API for correctAnswerId
+	let correctAnswerData = getPokemon(correctAnswerId, true)
+	
+	// fetch API for correctAnswerDescription
+	fetchDescription(correctAnswerData)
+
 
 
 
 }
 
-
-
+// activate first question
+startNewQuestion()
 
 
 function generateRandomPokemon(){
 	// generate random answer Pokemon
 	let numberOfRandomPokemon = 9
-	let maximumId = 1000 //should limit the pokemon to first generation
+	let maximumId = 151 // limits the pokemon to first generation
+	/*
+	Pokemon Generation Ids
+	1-151 Gen 1
+	152-251 Gen 2
+	252-386 Gen 3
+	387-493 Gen 4
+	494-649 Gen 5
+	650-721 Gen 6
+	722-809 Gen 7
+	810-905 Gen 8
+	906-1009 Gen 9
+	*/ 
 	let randomPokemonArray = []
 
 	for(let i=0; i<numberOfRandomPokemon; i++){
@@ -27,38 +50,21 @@ function generateRandomPokemon(){
 		randomPokemonArray.push(randomPokemonId)
 	}
 	console.log(randomPokemonArray)
+	return randomPokemonArray
 }
 
-
-
-
-
-
 // using async and await syntax
-async function getPokemon(){
-	
-	// query must be ID of that Pokemon
-	let query = "pikachu" 
-
+async function getPokemon(id, isCorrect){
 	// fetch pokemonData from api
-	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
+	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
 	// fetch returns a promise
 	try{
-		console.log(response)
-		// transform response into json
 		let pokemonData = await response.json()
 		console.log(pokemonData)
-
-		// get description for answer
-		fetchDescription(pokemonData)	
-
-		// display the description of answer pokemon
-		displayDescription(pokemonData)
-
-		// display all 9 pokemon in DOM
-		displaySprites(pokemonData)
-
-
+		// get and display the description for correct answer
+		if(isCorrect){
+			fetchDescription(pokemonData)
+		}
 	} catch (error){
 		console.log("MY ERROR: " +error)
 	}
@@ -101,26 +107,8 @@ function displaySprites(pokemonData){
 }
 
 
-async function makeTypeRequest(query){
-	const pokeTypeColors = {
-		"Psi Pokémon" : "purple",
-		"Flame Pokémon": "red"
 
-	}
-	// fetch pokemonData from api
-	const response = await fetch(`https://pokeapi.co/api/v2/type/ground/`)
-	// fetch returns a promise
-	try{
-		console.log(response)
-		let pokemonData = await response.json()
-		console.log(pokemonData)
-		
-	} catch (error){
-		console.log("MY ERROR: " +error)
-	}
-}
 
-getPokemon()
 
 
 /*
