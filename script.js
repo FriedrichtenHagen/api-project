@@ -7,6 +7,7 @@ const sprites = document.querySelector(".sprites")
 // store correctAnswer globaly, so it can be accessed by all functions
 let correctAnswerId;
 let score = 0;
+let selectedLanguage = "en"
 
 function startNewQuestion(){
 	// clear field of all previous sprites
@@ -34,7 +35,6 @@ async function getAllSprites(randomPokemonArray){
 		try{
 			let singlePokemonResponse = await response.json()
 			console.log(singlePokemonResponse)
-			console.log("cool")
 			displaySprites(singlePokemonResponse)
 		}catch{
 			
@@ -67,9 +67,6 @@ function generateRandomPokemon(){
 	let randomNumber = Math.floor(Math.random()*numberOfRandomPokemon)
 
 	correctAnswerId = randomPokemonArray[randomNumber]
-	console.log(correctAnswerId)
-
-	console.log(randomPokemonArray)
 	return randomPokemonArray
 }
 
@@ -98,7 +95,17 @@ async function fetchDescription(pokemonData){
 		let pokemonSpeciesJson = await response.json()
 		console.log(pokemonSpeciesJson)
 		
-		displayDescription(pokemonSpeciesJson.flavor_text_entries[0].flavor_text)
+		// iterate over flavor_text array to keep all entries in selected language
+		let validDescriptions = [];
+		pokemonSpeciesJson.flavor_text_entries.forEach(element => {
+			if(element.language.name===selectedLanguage){
+				validDescriptions.push(element.flavor_text)
+			}
+		});
+		// choose random description from validDescriptions
+		let chosenDescription = Math.floor(Math.random()*validDescriptions.length)
+
+		displayDescription(validDescriptions[chosenDescription])
 
 	} catch(error){
 		console.log("Pokemon Retrieval error: " + error)
@@ -108,8 +115,6 @@ function displayDescription(speciesDescription){
 	const name = document.querySelector(".description")
 	name.textContent = speciesDescription
 }
-
-
 
 // display the pokemon sprites in the DOM
 function displaySprites(pokemonData){
@@ -166,6 +171,8 @@ cleaning up description
 	remove unnecessary spaces from description
 
 prevent duplicate random ids
+
+use alternative descriptions
 
 make different generations different levels
 
