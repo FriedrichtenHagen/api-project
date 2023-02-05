@@ -12,20 +12,29 @@ function startNewQuestion(){
 	let correctAnswerId = randomPokemonArray[0]
 	console.log(correctAnswerId)
 
-	// fetch API for correctAnswerId
-	let correctAnswerData = getPokemon(correctAnswerId, true)
+	// fetch API for correctAnswerId and display description
+	getPokemon(correctAnswerId, true)
 	
-	// fetch API for correctAnswerDescription
-	fetchDescription(correctAnswerData)
-
+	// display all 9 sprites
+	getAllSprites(randomPokemonArray)
 
 
 
 }
 
-// activate first question
-startNewQuestion()
-
+async function getAllSprites(randomPokemonArray){
+	for(element of randomPokemonArray) {
+		const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${element}`)
+		try{
+			let singlePokemonResponse = await response.json()
+			console.log(singlePokemonResponse)
+			console.log("cool")
+			displaySprites(singlePokemonResponse)
+		}catch{
+			
+		}
+	}
+}
 
 function generateRandomPokemon(){
 	// generate random answer Pokemon
@@ -46,7 +55,7 @@ function generateRandomPokemon(){
 	let randomPokemonArray = []
 
 	for(let i=0; i<numberOfRandomPokemon; i++){
-		let randomPokemonId = Math.floor(Math.random()*maximumId)
+		let randomPokemonId = Math.floor(Math.random()*maximumId+1)
 		randomPokemonArray.push(randomPokemonId)
 	}
 	console.log(randomPokemonArray)
@@ -63,6 +72,7 @@ async function getPokemon(id, isCorrect){
 		console.log(pokemonData)
 		// get and display the description for correct answer
 		if(isCorrect){
+			// fetch and display the description
 			fetchDescription(pokemonData)
 		}
 	} catch (error){
@@ -83,7 +93,6 @@ async function fetchDescription(pokemonData){
 		console.log("Pokemon Retrieval error: " + error)
 	}	
 }
-
 function displayDescription(speciesDescription){
 	const name = document.querySelector(".description")
 	name.textContent = speciesDescription
@@ -110,6 +119,8 @@ function displaySprites(pokemonData){
 
 
 
+// activate first question
+startNewQuestion()
 
 /*
 Pokemon quiz

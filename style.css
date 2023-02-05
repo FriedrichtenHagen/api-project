@@ -24,7 +24,7 @@ body{
     font-size: 1.5rem;
     padding: 5px;
 }
-.sprite{
+.sprites{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
