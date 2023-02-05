@@ -6,14 +6,11 @@ const sprites = document.querySelector(".sprites")
 
 // store correctAnswer globaly, so it can be accessed by all functions
 let correctAnswerId;
-let score;
+let score = 0;
 
 function startNewQuestion(){
 	// clear field of all previous sprites
-
-	while (sprites.firstChild) {
-		sprites.removeChild(sprites.lastChild);
-	}
+	clearSprites()
 	// generate array of 9 random Pokemon ids
 	let randomPokemonArray = generateRandomPokemon()
 
@@ -23,6 +20,12 @@ function startNewQuestion(){
 	// fetch and display all 9 sprites
 	getAllSprites(randomPokemonArray)
 
+}
+
+function clearSprites(){
+	while (sprites.firstChild) {
+		sprites.removeChild(sprites.lastChild);
+	}
 }
 
 async function getAllSprites(randomPokemonArray){
@@ -61,7 +64,7 @@ function generateRandomPokemon(){
 		randomPokemonArray.push(randomPokemonId)
 	}
 	// decide which pokemon is the correct answer (1-numberOfRandomPokemon)
-	let randomNumber = Math.floor(Math.random()*numberOfRandomPokemon+1)
+	let randomNumber = Math.floor(Math.random()*numberOfRandomPokemon)
 
 	correctAnswerId = randomPokemonArray[randomNumber]
 	console.log(correctAnswerId)
@@ -144,7 +147,8 @@ function evaluateClick(spriteImage, currentId){
 		}, "2000")
 		
 		// update score in DOM
-
+		const scoreDiv = document.querySelector(".score")
+		scoreDiv.textContent = score
 	} else{
 		spriteImage.classList.add("incorrect")
 	}
@@ -163,8 +167,6 @@ cleaning up description
 
 prevent duplicate random ids
 
-
-add score counter
 make different generations different levels
 
 */

@@ -14,6 +14,16 @@ body{
 }
 .header{
     height: 30px;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.scoreRight{
+    display: flex;
+    padding: 5px;
+}
+.scoreText{
+    margin-right: 5px;
 }
 .content{
     height: 100%;
