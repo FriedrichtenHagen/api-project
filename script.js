@@ -4,12 +4,15 @@
 
 const sprites = document.querySelector(".sprites")
 
+// store correctAnswer globaly, so it can be accessed by all functions
+let correctAnswerId;
+let score;
 
 function startNewQuestion(){
 	// generate array of 9 random Pokemon ids
 	let randomPokemonArray = generateRandomPokemon()
 	// first pokemon in array is chosen as correct answer
-	let correctAnswerId = randomPokemonArray[0]
+	correctAnswerId = randomPokemonArray[0]
 	console.log(correctAnswerId)
 
 	// fetch API for correctAnswerId and display description
@@ -102,6 +105,7 @@ function displayDescription(speciesDescription){
 
 // display the pokemon sprites in the DOM
 function displaySprites(pokemonData){
+	let currentId = pokemonData.id
 	let spriteArray = Object.keys(pokemonData.sprites)
 	for(let key of spriteArray){
 		// only display front facing image
@@ -113,12 +117,30 @@ function displaySprites(pokemonData){
 				sprites.append(newSpriteImage)
 
 				// add eventlistener for click
+				newSpriteImage.addEventListener("click", ()=> {
+					evaluateClick(newSpriteImage, currentId) 
+				})
 			}
 		}
 	}
 }
 
+function evaluateClick(spriteImage, currentId){
+	console.log(currentId, correctAnswerId)
+	if(currentId===correctAnswerId){
+		spriteImage.classList.add("correct")
+		// increase score
+		score++
+		// check if new level is reached
 
+		// refresh description and sprites
+		startNewQuestion()
+		// update score in DOM
+
+	} else{
+		spriteImage.classList.add("incorrect")
+	}
+}
 
 
 
@@ -128,11 +150,14 @@ startNewQuestion()
 /*
 cleaning up description
 	only display english descriptions
+		enable language modes (also korean)
 	remove unnecessary spaces from description
 
 prevent duplicate random ids
 
-add score counter
+the first item should not always be the correct answer
 
+add score counter
+make different generations different levels
 
 */

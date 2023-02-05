@@ -36,3 +36,9 @@ body{
 .sprite:hover{
     transform: scale(1.5);
 }
+.correct{
+    background-color: green;
+}
+.incorrect{
+    background-color: red;
+}
