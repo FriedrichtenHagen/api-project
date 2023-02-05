@@ -109,7 +109,10 @@ function displaySprites(pokemonData){
 			if(pokemonData.sprites[key]!==null&&typeof(pokemonData.sprites[key])!== "object"){
 				let newSpriteImage = document.createElement("img")
 				newSpriteImage.src = `${pokemonData.sprites[key]}`
+				newSpriteImage.classList.add("sprite")
 				sprites.append(newSpriteImage)
+
+				// add eventlistener for click
 			}
 		}
 	}
@@ -123,13 +126,11 @@ function displaySprites(pokemonData){
 startNewQuestion()
 
 /*
-Pokemon quiz
-generate random (winning pokemon)
-fetch pokemonData.species.url for the description
-pokemonData.game_indices limit to old school pokemon
+cleaning up description
+	only display english descriptions
+	remove unnecessary spaces from description
 
-display four option button with 3 random pokemon
-	and the winning pokemon that matches the description
+prevent duplicate random ids
 
 add score counter
 
