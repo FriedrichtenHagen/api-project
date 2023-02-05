@@ -187,11 +187,13 @@ startNewQuestion()
 fillLanguageSelect()
 /*
 cleaning up description
-		enable language modes (also korean)
 	remove unnecessary spaces from description
 
 prevent duplicate random ids
 
+
+make language select more beautiful
+	remove: cs, roomaji, pt-BR
 
 make different generations different levels
 
