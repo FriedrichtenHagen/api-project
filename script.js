@@ -5,13 +5,32 @@
 const sprites = document.querySelector(".sprites")
 
 
+function startNewQuestion(){
+	// generate array of 9 random Pokemon ids
+
+
+
+}
+
+
+
+
+
 function generateRandomPokemon(){
 	// generate random answer Pokemon
-	let rightPokemon = 1
+	let numberOfRandomPokemon = 9
+	let maximumId = 1000 //should limit the pokemon to first generation
+	let randomPokemonArray = []
 
-	// generate 8 other random Pokemon
-	let wrongPokemon = 1
+	for(let i=0; i<numberOfRandomPokemon; i++){
+		let randomPokemonId = Math.floor(Math.random()*maximumId)
+		randomPokemonArray.push(randomPokemonId)
+	}
+	console.log(randomPokemonArray)
 }
+
+
+
 
 
 
