@@ -1,7 +1,3 @@
-// https://github.com/public-apis/public-apis
-// https://pokeapi.co/
-// https://developer.spotify.com/documentation/web-api/
-
 const sprites = document.querySelector(".sprites")
 
 // store correctAnswer globaly, so it can be accessed by all functions
@@ -21,6 +17,30 @@ function startNewQuestion(){
 	// fetch and display all 9 sprites
 	getAllSprites(randomPokemonArray)
 
+}
+
+async function fillLanguageSelect(){
+	const response = await fetch(`https://pokeapi.co/api/v2/language/`)
+		try{
+			let languageResponse = await response.json()
+			let availableLanguages = languageResponse.results.map(function(a) {return a.name;});
+			console.log(availableLanguages)
+
+			// access all available language abreviations e.g. "en"
+			const languageSelect = document.querySelector("#language")
+			availableLanguages.map(( lang, i) => {
+				let opt = document.createElement("option");
+				opt.value = lang; // the index
+				opt.textContent = lang;
+				languageSelect.append(opt);
+			})
+			languageSelect.addEventListener("change", ()=> {
+				selectedLanguage = languageSelect.value
+				console.log(selectedLanguage)
+			})
+		}catch{
+			
+		}
 }
 
 function clearSprites(){
@@ -163,17 +183,17 @@ function evaluateClick(spriteImage, currentId){
 
 // activate first question
 startNewQuestion()
-
+// fill the select with currently available languages from api
+fillLanguageSelect()
 /*
 cleaning up description
-	only display english descriptions
 		enable language modes (also korean)
 	remove unnecessary spaces from description
 
 prevent duplicate random ids
 
-use alternative descriptions
 
 make different generations different levels
 
+add error handeling
 */

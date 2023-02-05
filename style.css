@@ -17,9 +17,16 @@ body{
     display: flex;
     justify-content: flex-end;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#language{
+    border: 0px;
 }
 .scoreRight{
     display: flex;
+}
+.selectLeft, .scoreRight{
     padding: 5px;
 }
 .scoreText{
@@ -45,6 +52,7 @@ body{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+    min-height: 288px;
 
 }
 .sprite{
