@@ -169,11 +169,11 @@ function evaluateClick(spriteImage, currentId){
 		// refresh description and sprites
 		setTimeout(() => {
 			startNewQuestion()
-		}, "2000")
-		
+
 		// update score in DOM
 		const scoreDiv = document.querySelector(".score")
 		scoreDiv.textContent = score
+		}, "2000")
 	} else{
 		spriteImage.classList.add("incorrect")
 	}
@@ -196,6 +196,8 @@ make language select more beautiful
 	remove: cs, roomaji, pt-BR
 
 make different generations different levels
+	make star spin when score 10 is reached
+	display current Gen
 
 add error handeling
 */
