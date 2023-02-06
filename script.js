@@ -4,6 +4,8 @@ const sprites = document.querySelector(".sprites")
 let correctAnswerId;
 let score = 0;
 let selectedLanguage = "en"
+const pokemonGenerations = ["gen1","gen2","gen3","gen4","gen5","gen6","gen7","gen8","gen9"]
+let currentGeneration = pokemonGenerations[0]
 
 function startNewQuestion(){
 	// clear field of all previous sprites
@@ -20,27 +22,21 @@ function startNewQuestion(){
 }
 
 async function fillLanguageSelect(){
-	const response = await fetch(`https://pokeapi.co/api/v2/language/`)
-		try{
-			let languageResponse = await response.json()
-			let availableLanguages = languageResponse.results.map(function(a) {return a.name;});
-			console.log(availableLanguages)
+	// hard code available languages
+	const availableLanguages = ["en","ko", "fr", "de", "es", "it", "ja"]
 
-			// access all available language abreviations e.g. "en"
-			const languageSelect = document.querySelector("#language")
-			availableLanguages.map(( lang, i) => {
-				let opt = document.createElement("option");
-				opt.value = lang; // the index
-				opt.textContent = lang;
-				languageSelect.append(opt);
-			})
-			languageSelect.addEventListener("change", ()=> {
-				selectedLanguage = languageSelect.value
-				console.log(selectedLanguage)
-			})
-		}catch{
-			
-		}
+	// access all available language abreviations e.g. "en"
+	const languageSelect = document.querySelector("#language")
+	availableLanguages.map(( lang, i) => {
+		let opt = document.createElement("option");
+		opt.value = lang; 
+		opt.textContent = lang;
+		languageSelect.append(opt);
+	})
+	languageSelect.addEventListener("change", ()=> {
+		selectedLanguage = languageSelect.value
+		console.log(selectedLanguage)
+	})
 }
 
 function clearSprites(){
@@ -62,21 +58,21 @@ async function getAllSprites(randomPokemonArray){
 	}
 }
 
+const pokemonGenerationMaxId = {
+	gen1: 151, 
+	gen2: 251,
+	gen3: 386,
+	gen4: 493,
+	gen5: 649,
+	gen6: 721, 
+	gen7: 809,
+	gen8: 905,
+	gen9: 1009,
+}
+
 function generateRandomPokemon(){
 	let numberOfRandomPokemon = 9
-	let maximumId = 151 // limits the pokemon to first generation
-	/*
-	Pokemon Generation Ids
-	1-151 Gen 1
-	152-251 Gen 2
-	252-386 Gen 3
-	387-493 Gen 4
-	494-649 Gen 5
-	650-721 Gen 6
-	722-809 Gen 7
-	810-905 Gen 8
-	906-1009 Gen 9
-	*/ 
+	let maximumId = pokemonGenerationMaxId[currentGeneration] 
 	let randomPokemonArray = []
 
 	for(let i=0; i<numberOfRandomPokemon; i++){
@@ -125,6 +121,8 @@ async function fetchDescription(pokemonData){
 		// choose random description from validDescriptions
 		let chosenDescription = Math.floor(Math.random()*validDescriptions.length)
 
+		// remove unnecessary spaces from string
+		console.log(validDescriptions[chosenDescription])
 		displayDescription(validDescriptions[chosenDescription])
 
 	} catch(error){
@@ -165,6 +163,12 @@ function evaluateClick(spriteImage, currentId){
 		// increase score
 		score++
 		// check if new level is reached
+		if(score === levelScoreBoard.level2){
+			// start level 2
+			currentGeneration = pokemonGenerations[1]
+			updateLevel()
+		}
+
 
 		// refresh description and sprites
 		setTimeout(() => {
@@ -178,7 +182,20 @@ function evaluateClick(spriteImage, currentId){
 		spriteImage.classList.add("incorrect")
 	}
 }
-
+const levelScoreBoard = {
+	level2: 5,
+	level3: 10, 
+	level4: 15,
+	level5: 20,
+	level6: 25,
+	level7: 30,
+	level8: 35, 
+	level9: 40,
+}
+function updateLevel(){
+	const level = document.querySelector(".generationNumber")
+	level.textContent = currentGeneration
+}
 
 
 // activate first question
@@ -191,9 +208,9 @@ cleaning up description
 
 prevent duplicate random ids
 
+add minimum id, so that each level only shows the current generation
 
 make language select more beautiful
-	remove: cs, roomaji, pt-BR
 
 make different generations different levels
 	make star spin when score 10 is reached

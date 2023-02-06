@@ -24,9 +24,7 @@ body{
 #language{
     border: 0px;
     background-color: var(--main-color)
-}
-.scoreRight{
-
+    
 }
 .selectLeft, .scoreRight{
     padding: 5px;
@@ -37,6 +35,14 @@ body{
     margin-right: 5px;
     height: 30px;
 }
+.generation{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+.generationText{
+    margin-right: 5px;
+}
 .content{
     height: 100%;
     display: flex;
@@ -46,6 +52,7 @@ body{
     flex-direction: column;
 }
 .description{
+    background-color: white;
     font-size: 1.5rem;
     padding: 15px;
     max-width: 300px;
