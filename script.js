@@ -58,25 +58,26 @@ async function getAllSprites(randomPokemonArray){
 	}
 }
 
-const pokemonGenerationMaxId = {
-	"Generation 1": 151, 
-	"Generation 2": 251,
-	"Generation 3": 386,
-	"Generation 4": 493,
-	"Generation 5": 649,
-	"Generation 6": 721, 
-	"Generation 7": 809,
-	"Generation 8": 905,
-	"Generation 9": 1009,
+const pokemonGenerationId = {
+	"Generation 1": {min: 1, max: 151}, 
+	"Generation 2": {min: 152, max: 251},
+	"Generation 3": {min: 252, max: 386},
+	"Generation 4": {min: 387, max: 493},
+	"Generation 5": {min: 494, max: 649},
+	"Generation 6": {min: 650, max: 721},
+	"Generation 7": {min: 722, max: 809},
+	"Generation 8": {min: 810, max: 905},
+	"Generation 9": {min: 906, max: 1009},
 }
 
 function generateRandomPokemon(){
 	let numberOfRandomPokemon = 9
-	let maximumId = pokemonGenerationMaxId[currentGeneration] 
+	let minimumId = pokemonGenerationId[currentGeneration].min
+	let maximumId = pokemonGenerationId[currentGeneration].max
 	let randomPokemonArray = []
 
 	for(let i=0; i<numberOfRandomPokemon; i++){
-		let randomPokemonId = Math.floor(Math.random()*maximumId+1)
+		let randomPokemonId = Math.floor(Math.random()*(maximumId-minimumId+1)+minimumId)
 		randomPokemonArray.push(randomPokemonId)
 	}
 	// decide which pokemon is the correct answer (1-numberOfRandomPokemon)
@@ -213,13 +214,13 @@ function evaluateClick(spriteImage, currentId){
 }
 const levelScoreBoard = {
 	level2: 1,
-	level3: 10, 
-	level4: 15,
-	level5: 20,
-	level6: 25,
-	level7: 30,
-	level8: 35, 
-	level9: 40,
+	level3: 2, 
+	level4: 3,
+	level5: 4,
+	level6: 5,
+	level7: 6,
+	level8: 7, 
+	level9: 8,
 }
 function updateLevel(){
 	const level = document.querySelector(".generation")
