@@ -36,6 +36,7 @@ async function fillLanguageSelect(){
 	languageSelect.addEventListener("change", ()=> {
 		selectedLanguage = languageSelect.value
 		console.log(selectedLanguage)
+		startNewQuestion()
 	})
 }
 
@@ -67,7 +68,7 @@ const pokemonGenerationId = {
 	"Generation 6": {min: 650, max: 721},
 	"Generation 7": {min: 722, max: 809},
 	"Generation 8": {min: 810, max: 905},
-	"Generation 9": {min: 906, max: 1009},
+	// "Generation 9": {min: 906, max: 1008},
 }
 
 function generateRandomPokemon(){
@@ -197,10 +198,10 @@ function evaluateClick(spriteImage, currentId){
 					currentGeneration = pokemonGenerations[7]
 					updateLevel()
 					break;
-				case levelScoreBoard.level9:
-					currentGeneration = pokemonGenerations[8]
-					updateLevel()
-					break;
+				// case levelScoreBoard.level9:
+				// 	currentGeneration = pokemonGenerations[8]
+				// 	updateLevel()
+				// 	break;
 			}
 			startNewQuestion()
 
@@ -220,7 +221,7 @@ const levelScoreBoard = {
 	level6: 5,
 	level7: 6,
 	level8: 7, 
-	level9: 8,
+	// level9: 8,
 }
 function updateLevel(){
 	const level = document.querySelector(".generation")
@@ -250,13 +251,7 @@ cleaning up description
 
 prevent duplicate random ids
 
-add minimum id, so that each level only shows the current generation
-
 make language select more beautiful
-
-make different generations different levels
-	make star spin when score 10 is reached
-	display current Gen
 
 add error handeling
 */

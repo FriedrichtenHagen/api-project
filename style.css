@@ -23,9 +23,9 @@ body{
     border-bottom: 1px solid #0000000d;
 }
 #language{
-    border: 0px;
-    background-color: var(--main-color)
-    
+    border: none;
+    background-color: var(--main-color);
+    padding: 0 1em 0 0;
 }
 .selectLeft, .scoreRight{
     padding: 5px;
@@ -38,7 +38,7 @@ body{
     transition: ease-in 1s;
 }
 .pokeStar.spin{
-    transform: rotate(360deg);
+    transform: rotate(-360deg);
     transition: none;
 }
 .generation{
