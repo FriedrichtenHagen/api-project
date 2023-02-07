@@ -20,6 +20,7 @@ body{
     width: 100%;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #0000000d;
 }
 #language{
     border: 0px;
@@ -34,11 +35,20 @@ body{
 .pokeStar{
     margin-right: 5px;
     height: 30px;
+    transition: ease-in 1s;
+}
+.pokeStar.spin{
+    transform: rotate(360deg);
+    transition: none;
 }
 .generation{
     display: flex;
     align-items: center;
     font-weight: bold;
+    transition: ease-in-out 1s;
+}
+.generation.grow{
+    transform: scale(1.5);
 }
 .generationText{
     margin-right: 5px;

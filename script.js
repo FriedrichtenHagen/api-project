@@ -4,7 +4,7 @@ const sprites = document.querySelector(".sprites")
 let correctAnswerId;
 let score = 0;
 let selectedLanguage = "en"
-const pokemonGenerations = ["gen1","gen2","gen3","gen4","gen5","gen6","gen7","gen8","gen9"]
+const pokemonGenerations = ["Generation 1","Generation 2","Generation 3","Generation 4","Generation 5","Generation 6","Generation 7","Generation 8","Generation 9"]
 let currentGeneration = pokemonGenerations[0]
 
 function startNewQuestion(){
@@ -59,15 +59,15 @@ async function getAllSprites(randomPokemonArray){
 }
 
 const pokemonGenerationMaxId = {
-	gen1: 151, 
-	gen2: 251,
-	gen3: 386,
-	gen4: 493,
-	gen5: 649,
-	gen6: 721, 
-	gen7: 809,
-	gen8: 905,
-	gen9: 1009,
+	"Generation 1": 151, 
+	"Generation 2": 251,
+	"Generation 3": 386,
+	"Generation 4": 493,
+	"Generation 5": 649,
+	"Generation 6": 721, 
+	"Generation 7": 809,
+	"Generation 8": 905,
+	"Generation 9": 1009,
 }
 
 function generateRandomPokemon(){
@@ -162,28 +162,57 @@ function evaluateClick(spriteImage, currentId){
 		spriteImage.classList.add("correct")
 		// increase score
 		score++
-		// check if new level is reached
-		if(score === levelScoreBoard.level2){
-			// start level 2
-			currentGeneration = pokemonGenerations[1]
-			updateLevel()
-		}
-
-
 		// refresh description and sprites
 		setTimeout(() => {
+
+			// check if new level is reached
+			switch(score){
+				case levelScoreBoard.level2:
+					// start level 2
+					currentGeneration = pokemonGenerations[1]
+					updateLevel()
+					break;
+				case levelScoreBoard.level3:
+					currentGeneration = pokemonGenerations[2]
+					updateLevel()
+					break;
+				case levelScoreBoard.level4:
+					currentGeneration = pokemonGenerations[3]
+					updateLevel()
+					break;
+				case levelScoreBoard.level5:
+					currentGeneration = pokemonGenerations[4]
+					updateLevel()
+					break;
+				case levelScoreBoard.level6:
+					currentGeneration = pokemonGenerations[5]
+					updateLevel()
+					break;
+				case levelScoreBoard.level7:
+					currentGeneration = pokemonGenerations[6]
+					updateLevel()
+					break;
+				case levelScoreBoard.level8:
+					currentGeneration = pokemonGenerations[7]
+					updateLevel()
+					break;
+				case levelScoreBoard.level9:
+					currentGeneration = pokemonGenerations[8]
+					updateLevel()
+					break;
+			}
 			startNewQuestion()
 
 		// update score in DOM
 		const scoreDiv = document.querySelector(".score")
 		scoreDiv.textContent = score
-		}, "2000")
+		}, "1000")
 	} else{
 		spriteImage.classList.add("incorrect")
 	}
 }
 const levelScoreBoard = {
-	level2: 5,
+	level2: 1,
 	level3: 10, 
 	level4: 15,
 	level5: 20,
@@ -193,8 +222,20 @@ const levelScoreBoard = {
 	level9: 40,
 }
 function updateLevel(){
-	const level = document.querySelector(".generationNumber")
+	const level = document.querySelector(".generation")
 	level.textContent = currentGeneration
+	// generation animation
+	level.classList.add("grow")
+
+	// pokestar animation
+	const pokeStar = document.querySelector(".pokeStar")
+	pokeStar.classList.add("spin")
+
+	setTimeout(()=>{
+		// remove animation classes
+		pokeStar.classList.remove("spin")
+		level.classList.remove("grow")
+	}, 1000)
 }
 
 
@@ -204,7 +245,7 @@ startNewQuestion()
 fillLanguageSelect()
 /*
 cleaning up description
-	remove unnecessary spaces from description
+	remove unnecessary spaces from description \n \f ?
 
 prevent duplicate random ids
 
