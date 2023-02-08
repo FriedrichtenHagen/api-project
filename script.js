@@ -53,8 +53,8 @@ async function getAllSprites(randomPokemonArray){
 			let singlePokemonResponse = await response.json()
 			console.log(singlePokemonResponse)
 			displaySprites(singlePokemonResponse)
-		}catch{
-			
+		}catch(error){
+			console.log(`getting Sprites: ${error}`)
 		}
 	}
 }
@@ -78,7 +78,12 @@ function generateRandomPokemon(){
 	let randomPokemonArray = []
 
 	for(let i=0; i<numberOfRandomPokemon; i++){
+		
 		let randomPokemonId = Math.floor(Math.random()*(maximumId-minimumId+1)+minimumId)
+		// check if random Id already exists in randomPokemonArray (to prevent duplicates)
+		while((randomPokemonArray.includes(`${randomPokemonId}`))){
+			randomPokemonId = Math.floor(Math.random()*(maximumId-minimumId+1)+minimumId)
+		}
 		randomPokemonArray.push(randomPokemonId)
 	}
 	// decide which pokemon is the correct answer (1-numberOfRandomPokemon)
