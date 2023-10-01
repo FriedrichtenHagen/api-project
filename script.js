@@ -250,13 +250,16 @@ function updateLevel(){
 startNewQuestion()
 // fill the select with currently available languages from api
 fillLanguageSelect()
+
+
+
 /*
 cleaning up description
 	remove unnecessary spaces from description \n \f ?
 
-prevent duplicate random ids
-
 make language select more beautiful
 
-add error handeling
+add a start page with prof oak explaining the rules
+add a success page after level 8
+add an open categorie after level 8
 */
